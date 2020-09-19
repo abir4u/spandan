@@ -4,8 +4,6 @@ from django.contrib.auth.models import Group
 from django.contrib import messages
 # Register your models here.
 
-
-   
 class D(admin.ModelAdmin):
     def marked_up(modeladmin, request, queryset):
         queryset.update(marked='True')

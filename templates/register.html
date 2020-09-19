@@ -1,0 +1,20 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+ <form action="reg" method="post">
+   {% csrf_token %}
+     First Name:     <input type="text" name="first_name"><br>
+    <br> Last Name:       <input type="text" name="last_name"><br>
+    <br> Username:      <input type="text" name="username"><br>
+    <br> Email_Id:     <input type="email" name="email"><br>
+    <br> Password:         <input type="password" name="password"><br>
+    <br> Rwrite password:  <input type="password" name="password1"><br>
+    <br><input type="submit">
+ </form>
+ <div>
+    {% for message in messages %}
+    <h1>{{message}}</h1>
+    {% endfor %}
+ </div>
+ 
+ {% endblock %}

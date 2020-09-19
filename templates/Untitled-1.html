@@ -1,0 +1,11 @@
+{% extends 'base.html' %} 
+
+ {% block content %}
+ <font color="red" size=22px><center>welcome to Django  Mr.{{name}}. Glad you enjoy our project.</center></font>
+    
+    <form action="add">
+        Enter the 1st number : <input type="text" name="num1"><br>
+        Enter the 2nd number : <input type="text" name="num2"><br>
+        <input type="submit">
+    </form>
+ {% endblock %}

@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Travello template project">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static  '/ckeditor/ckeditor.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static  'styles/news.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static  'styles/bootstrap4/bootstrap.min.css' %}">
+    <link href="{% static  'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static  'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static  'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static  'plugins/OwlCarousel2-2.2.1/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static  'styles/news_responsive.css' %}">
+
+</head>
+
+<body>
+    <div>
+        <header class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                            <div class="header_content_inner d-flex flex-row align-items-end justify-content-start">
+                                <div class="logo"><a href="index.html">Travello</a></div>
+                                <nav class="main_nav">
+                                    <ul class="d-flex flex-row align-items-start justify-content-start">
+                                        <li><a href="http://127.0.0.1:8000/">Home</a></li>
+                                        <li><a href="http://127.0.0.1:8000/about">About us</a></li>
+                                        <li class="active"><a href="http://127.0.0.1:8000/client/news">News</a></li>
+                                        <li><a href="http://127.0.0.1:8000/client/contract">Contract</a></li>
+                                    </ul>
+                                </nav>
+                                <div class="header_phone ml-auto">Call us: 00-56 445 678 33</div>
+
+                                <!-- Hamburger -->
+
+                                <div class="hamburger ml-auto">
+                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header_social d-flex flex-row align-items-center justify-content-start">
+                <ul class="d-flex flex-row align-items-start justify-content-start">
+                    <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </header>
+    </div>
+    <!-- Menu -->
+
+    <div class="menu">
+        <div class="menu_header d-flex flex-row align-items-center justify-content-start">
+            <div class="menu_logo"><a href="index.html">Travello</a></div>
+            <div class="menu_close_container ml-auto">
+                <div class="menu_close">
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <div class="menu_content">
+            <ul>
+                <li><a href="inex.html">Home</a></li>
+                <li><a href="about.html">About us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div class="menu_social">
+            <div class="menu_phone ml-auto">Call us: 00-56 445 678 33</div>
+            <ul class="d-flex flex-row align-items-start justify-content-start">
+                <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="news">
+        <!--- Content edit by Me -->
+        <center>
+            <h1>{{selected_post.post_name}}</h1>
+            <img src="{{selected_post.post_image.url}}" height=500px width=800px>
+        </center>
+        <h2 style="padding:20px">{{selected_post.post_catagory}}</h2>
+        <div style="padding:10px;">{{selected_post.post_desc | safe}}</div>
+    </div>
+    <div style="padding: 20px;">
+        <form method="POST" action="">
+            {% csrf_token %}
+
+            {{comment_form.as_p}}
+            <input type="hidden" name="user_id" value="{{request.user.id}}">
+            <input type="hidden" name="comment_id" value="{{comm.id}}">
+            <textarea type="text" name="message" placeholder="leave a meeage"
+                style="width:700px;height:100px"></textarea>
+            <div style="padding-left:640px"><button type="submit" style=" padding:10px "> Submit</button></div>
+        </form>
+
+
+
+        {% with comments.count as total_comments %}
+        <h3>{{total_comments}} Comment{{total_comments| pluralize}} </h3>
+        {% endwith %}
+        
+        {% for comm in comments %}
+        <div>
+        <strong>comment {{forloop.counter}} by
+                {{comm.user_id.username}} </strong>
+            &ndash; {{comm.date}}
+        {{comm.message | linebreaks}}
+        </div>
+       
+            <p>
+                <a class="btn btn-primary" data-toggle="collapse" href="#replybox{{comm.id}}" role="button"
+                aria-expanded="false" aria-controls="replybox{{comm.id}}">
+                    Reply
+                </a>
+            </p>
+    
+            
+            <div class="collapse" id="replybox{{comm.id}}">
+                <div class="card card-body">
+       
+            {% for reply in  comm.replies.all %}
+            {% if reply.active %}
+            <div style="padding: 0px 0px 0px 0px; margin:0px 0px 0px 0px">
+                <strong style="font-size:12px">Reply {{forloop.counter}} by
+                        {{reply.user_id.username}} </strong>
+                    &ndash; {{reply.date}}
+                {{reply.message | linebreaks }}</div>
+                    {% endif %}
+                {% endfor %}
+                
+                <form method="POST" action="">
+                    {{comment_form.as_p}}
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{request.user.id}}">
+                    <input type="hidden" name="comment_id" value="{{comm.id}}">
+                    <div style="padding-left: 15px;"><textarea type="text" name="message"
+                            placeholder="Reply the  meeage" style="width:700px;height:50px"></textarea></div>
+                        <div style="padding-left:640px"><button type="submit" style=" padding:5px "> Reply</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <script src="{% static  'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static  'styles/bootstrap4/popper.js' %}"></script>
+    <script src="{% static  'styles/bootstrap4/bootstrap.min.js' %}"></script>
+    <script src="{% static  'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+    <script src="{% static  'plugins/easing/easing.js' %}"></script>
+    <script src="{% static  'plugins/parallax-js-master/parallax.min.js' %}"></script>
+    <script src="{% static  'js/news.js' %}"></script>
+    <script src="{% static  '/ckeditor/ckdeitor-init.js' %}"></script>
+    <script src="{% static 'Js/custom.js' %}"></script>
+
+</body>
+
+</html>
